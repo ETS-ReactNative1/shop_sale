@@ -12,10 +12,14 @@ module.exports = {
       jsx: true,
     },
   },
+  
+  rules: {
+    "prettier/prettier": 0
+  },
   plugins: ["react"],
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-  ],
+  ]
 };

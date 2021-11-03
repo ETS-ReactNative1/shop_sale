@@ -27,7 +27,6 @@ import SectionCompletedExamples from "./Sections/SectionCompletedExamples.js";
 import SectionLogin from "./Sections/SectionLogin.js";
 import SectionExamples from "./Sections/SectionExamples.js";
 import SectionDownload from "./Sections/SectionDownload.js";
-import { NotificationContext } from "./Context/NotificationContext.js";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 
@@ -69,11 +68,7 @@ export default function Components(props) {
         <SectionNavbars />
         <SectionTabs />
         <SectionPills />
-        <NotificationContext.Provider
-          value={{ type: "Value", text: "Login Failed" }}
-        >
-          <SectionNotifications />
-        </NotificationContext.Provider>
+        <SectionNotifications />
         <SectionTypography />
         <SectionJavascript />
         <SectionCarousel />
