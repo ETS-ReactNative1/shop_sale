@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect,useState}from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+
+// import { useEffect } from "react";
 
 // @material-ui/icons
 
@@ -17,6 +19,8 @@ import Parallax from "components/Parallax/Parallax.js";
 
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
+import axios from 'axios';
+
 // Sections for this page
 
 const dashboardRoutes = [];
@@ -24,6 +28,16 @@ const dashboardRoutes = [];
 const useStyles = makeStyles(styles);
 
 export default function Home(props) {
+
+  const [user, setUser] =  useState([])
+
+  //Get Dâta
+  useEffect(()=>{
+    axios.get('http://localhost:4000/users/api/show')
+    .then(function (response) {
+      setUser(response.data);
+    })
+    },[])
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -48,7 +62,7 @@ export default function Home(props) {
               <h4>
                 Every landing page needs a small description after the big bold
                 title, that{"'"}s why we added this text here. Add here all the
-                information that can make you or your product create the firstaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                information that can make you or your product create the first
                 impression.
               </h4>
               <br />
@@ -68,28 +82,29 @@ export default function Home(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-          
-          <h1>aaaaaaaaaaaaaaaaaaaaaaa</h1>
-
+          <div className="ngocdieu">
+            {
+              user.map((data,index)=>(
+                <React.Fragment key={index}>
+                   <h1>{data.name}</h1>
+                   <h1>{data.phone}</h1>
+                   <h1>{data.email}</h1>
+                   <h1>{data.address}</h1>
+                   <h1>{data.yearOfBirth}</h1>
+                   
+                   <ul >
+                  { data.cart.map((data)=>{console.log(data);})}
+                   {
+                     data.cart.map((cartItem,index)=>(
+                      <li key={index}>{cartItem.name}</li>
+                     ))
+                   }
+                   </ul>
+                </React.Fragment>
+                )
+              )
+            }
+          </div>
         </div>
       </div>
       <Footer />
