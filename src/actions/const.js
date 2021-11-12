@@ -1,0 +1,1 @@
+export const GET_CLOTHES = "GET_CLOTHES";

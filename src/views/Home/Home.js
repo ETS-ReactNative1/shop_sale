@@ -1,10 +1,10 @@
-import React, {useEffect,useState}from "react";
+import React , {useEffect}from "react";
+
+import { useDispatch,useSelector } from "react-redux"
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
-// import { useEffect } from "react";
 
 // @material-ui/icons
 
@@ -16,10 +16,10 @@ import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
-
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
-import axios from 'axios';
+import {getClothes} from "../../actions/clothesAction"
+
 
 // Sections for this page
 
@@ -29,15 +29,14 @@ const useStyles = makeStyles(styles);
 
 export default function Home(props) {
 
-  const [user, setUser] =  useState([])
-
-  //Get Dâta
+  const clothesList = useSelector(state => state.clothes.list);
+  const dispatch = useDispatch();
   useEffect(()=>{
-    axios.get('http://localhost:4000/users/api/show')
-    .then(function (response) {
-      setUser(response.data);
-    })
-    },[])
+    dispatch(getClothes())
+  },[]);
+  
+  
+
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -82,29 +81,11 @@ export default function Home(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <div className="ngocdieu">
-            {
-              user.map((data,index)=>(
-                <React.Fragment key={index}>
-                   <h1>{data.name}</h1>
-                   <h1>{data.phone}</h1>
-                   <h1>{data.email}</h1>
-                   <h1>{data.address}</h1>
-                   <h1>{data.yearOfBirth}</h1>
-                   
-                   <ul >
-                  { data.cart.map((data)=>{console.log(data);})}
-                   {
-                     data.cart.map((cartItem,index)=>(
-                      <li key={index}>{cartItem.name}</li>
-                     ))
-                   }
-                   </ul>
-                </React.Fragment>
-                )
-              )
-            }
-          </div>
+          <ul>
+            {clothesList.map((data,index) =>(
+              <li style={{color: 'black'}}key={index}><h4>{data.name}</h4></li>
+            ))}
+          </ul>
         </div>
       </div>
       <Footer />
